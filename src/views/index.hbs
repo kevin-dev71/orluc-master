@@ -1,1 +1,29 @@
-<h1>INDEX POAGE</h1>
+<h2 class="border-bottom border-dark">Lista de Productos</h2>
+<div class="row" id="products-list-main">
+    <div class="card-columns">
+        {{#each products}}
+            <div class="card animated fadeIn">
+                <img src="{{image}}" class="card-img-top" alt="{{name}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <p>USD {{sale_price}}</p>
+                    <a href="#" class="btn btn-primary">
+                        View
+                    </a>
+                </div>
+            </div>
+        {{else}}
+            <div class="card-body">
+                <h5 class="card-title">No Hay Productos para mostrar</h5>
+            </div>
+        {{/each}}
+    </div>
+</div>
+{{# if pages }}
+    <div class="row">
+        <a id="load-more-btn" href="" class="btn btn-success btn-lg btn-block mx-auto">
+            Cargar mas
+        </a>
+    </div>    
+{{/if}}

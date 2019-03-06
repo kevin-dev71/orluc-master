@@ -1,18 +1,30 @@
-const controller = {};
-/*const sidebar = require('../helpers/sidebar');
-const { Image } = require('../models');*/
 const User      = require('../models/User');
+const Product   = require('../models/Product');
 const passport  = require('passport');
 
-controller.index = (req, res) => {
-    /*const images = await Image
-        .find()
-        .sort({ timestamp: -1 });
+const controller = {};
 
-    let viewModel = { images: [] };
-    viewModel.images = images;
-    viewModel = await sidebar(viewModel);*/
-    res.render('index');
+controller.index = async (req, res) => {
+    var scripts = [{ script: '/js/infiniteScroll.js' }];
+    let perPage = 3;
+    let page = req.query.page || 1;
+
+    Product.find({}) // finding all documents
+        .skip(perPage * page - perPage) // in the first page the value of the skip is 0
+        .limit(perPage) // output just 9 items
+        .sort({date: 'desc'}) 
+        .exec((err, products) => {
+            Product.countDocuments((err, count) => {
+                // count to calculate the number of pages
+                if (err) return next(err);
+                res.render("index", {
+                    products,
+                    current: page,
+                    pages: Math.ceil(count / perPage),
+                    scripts: scripts
+                });
+            });
+        });
 }
 
 controller.login = (req , res) => {

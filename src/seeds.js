@@ -11,15 +11,21 @@ var adminUser = {
     isAdmin: true
 };
 
-function seedDB(){
+async function seedDB(){
+    await User.deleteMany({}, function(err) { 
+      console.log('Users removed') 
+    });
+    await Product.deleteMany({}, function(err) { 
+      console.log('Products removed') 
+    });
     // Create a Admin User
-    User.create(adminUser, function(e) {
+    await User.create(adminUser, function(e) {
 	    if (e) {
 	        throw e;
 	    }
     });
     // Create 90 products
-    for(let i = 0; i < 90; i++) {
+    for(let i = 0; i < 25; i++) {
         const product = new Product();
         product.category = faker.commerce.department();
         product.name = faker.commerce.productName();
@@ -28,11 +34,11 @@ function seedDB(){
         product.sale_price = faker.commerce.price();
         product.quantity = 18;
         product.image = faker.image.image();
-        product.save(err => {
+        await product.save(err => {
           if (err) { return next(err); }
         });
       }
-      console.log("BD Seeded with 90 products and Admin User");
+      console.log("BD Seeded with 25 products and Admin User");
 }
 
 module.exports = seedDB;
