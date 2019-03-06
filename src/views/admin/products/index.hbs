@@ -1,0 +1,48 @@
+<div class="row">
+  <a class="btn btn-success" href="/admin/products/new">Nuevo</a>
+</div>
+<div class="row mt-3">
+  <div class="col-md-12">
+    <table class="box table table-striped table-hover table-responsive m-t-0" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>Producto</th>
+          <th>Descripcion</th>
+          <th>Precio Costo</th>
+          <th>Precio Venta</th>
+          <th>Cantidad</th>
+          <th>Detalles</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <td><img class="img-fluid img-thumbnail" src="{{image}}"></td>
+          <td>{{name }}</td>
+          <td>{{trimString description 0 50}}....</td>
+          <td>{{cost_price }}</td>
+          <td>{{sale_price }}</td>
+          <td>{{quantity }}</td>
+          <td>
+            <a class="btn btn-info btn-block btn-sm" href="/admin/products/{{_id}}"><i class="far fa-eye"></i> Ver mas</a>
+          </td>
+          <td>
+            <form action="/admin/products/{{_id}}?_method=DELETE" method="POST">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-danger btn-block btn-sm"> <i class="fas fa-trash-alt"></i> Delete</button>
+            </form>
+          </td>
+          <td>
+            <a class="btn btn-warning btn-block btn-sm" href="/admin/products/{{_id}}/edit"><i class="fas fa-edit"></i> Editar</a>
+          </td>
+        </tr>
+        {{else}}
+        <tr>No Hay Productos</tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

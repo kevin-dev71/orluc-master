@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="card mx-auto">
+        <div class="card-header bg-dark">
+            <h3 class="card-title text-white">
+                <i class="far fa-image"></i> Nuevo Producto
+            </h3>
+        </div>
+        <div class="card-body">
+            <form action="/admin/products" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="image" class="custom-file-input" id="inputGroup"
+                                aria-describedby="inputGroupFileAddon" required>
+                            <label class="custom-file-label" for="inputGroupFile">Sube tu imagen</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="product[name]" required autofocus placeholder="Nombre del producto">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="product[description]" rows="5" placeholder="Description for the producto" required></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="number" step="0.01" min="0" placeholder="Precio Costo" class="form-control" name="product[cost_price]" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" step="0.01" min="0" placeholder="Precio Venta" class="form-control" name="product[sale_price]" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" step="0.01" min="0" placeholder="Cantidad" class="form-control" name="product[quantity]" required>
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-info" href="/admin/products"><i class="fas fa-arrow-left"></i> Regresar</a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-upload"></i> Crear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

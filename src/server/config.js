@@ -25,14 +25,33 @@ module.exports = app => {
         partialsDir: path.join(app.get('views'), 'partials'),
         layoutsDir: path.join(app.get('views'), 'layouts'),
         extname: '.hbs',
-        helpers: require('./helpers')
+        helpers: require('./hbshelpers')
     }));
     app.set('view engine' , '.hbs');
+
+    //		file upload storage path
+    const storage = multer.diskStorage({
+        destination: path.join(__dirname , '../public/uploads'),
+        filename(req, file, cb){
+            cb(null, file.originalname + "_" + new Date().getTime() + path.extname(file.originalname));
+        }
+    });
 
     //middlewares
     app.use(morgan('dev'));
     app.use(multer({
-        dest: path.join(__dirname, '../public/upload/temp')
+        storage: storage,
+        dest: path.join(__dirname, '../public/uploads'),
+        fileFilter: (req, file, cb) => {
+            const filetypes  = /jpeg|jpg|png|gif/;
+            const mimetype = filetypes.test(file.mimetype);
+            const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+            if(mimetype && extname){
+                return cb(null, true);
+            }
+            cb("Error: File upload only supports the following filetypes - " + filetypes);
+        }
+        // limits: {fileSize: 1000000}
     }).single('image'));
     app.use(express.urlencoded({extended:false}));
     app.use(express.json());
@@ -58,7 +77,7 @@ module.exports = app => {
     routes(app);
 
     // static files
-    app.use('/public' , express.static(path.join(__dirname, '../public')));
+    app.use(express.static(path.join(__dirname, '../public')));
 
     //errorhandlers
     if ('development' === app.get('env')){

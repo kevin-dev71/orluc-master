@@ -9,7 +9,7 @@ const config    = require('./server/config');
 //database
 require('./database');
 
-//SeedDB... Comment when seeded
+//SeedDB... uncomment to seed, execute one time
 /*seedDB      	= require("./seeds"),
 seedDB();*/
 

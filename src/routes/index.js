@@ -1,27 +1,32 @@
-const express   = require('express');
-const router    = express.Router();
+const express       = require('express');
+const router        = express.Router();
 
-const home = require('../controllers/home');
-//const image = require('../controllers/image');
+const homeCtlr      = require('../controllers/home');
+const adminCtlr     = require('../controllers/admin');
 
 const { isAuthenticated, isAdmin } = require('../middlewares/auth');
 
 module.exports = app => {
 
-    // Home Routes
-    router.get('/' , home.index);
+    // HOME ROUTES
+    router.get('/' , homeCtlr.index);
 
-    router.get('/login' , home.login);
-    router.post('/users/login' , home.signin);
+    router.get('/login' , homeCtlr.login);
+    router.post('/users/login' , homeCtlr.signin);
 
-    router.get('/register' , home.register);
-    router.post('/users/register' , home.signup);
+    router.get('/register' , homeCtlr.register);
+    router.post('/users/register' , homeCtlr.signup);
 
-    router.get('/logout' , home.logout);
-    /*router.post('/images' , image.create);
-    router.post('/images/:image_id/like', image.like);
-    router.post('/images/:image_id/comment' , image.comment);
-    router.delete('/images/:image_id' , image.remove);*/
+    router.get('/logout' , homeCtlr.logout);
+
+    // PRODUCTS ADMIN ROUTES
+    router.get('/admin/products' ,isAuthenticated, isAdmin, adminCtlr.productList);
+    router.get('/admin/products/new' ,isAuthenticated, isAdmin, adminCtlr.productForm);
+    router.post('/admin/products' ,isAuthenticated, isAdmin, adminCtlr.productCreate);
+    router.get('/admin/products/:id' ,isAuthenticated, isAdmin, adminCtlr.productShow);
+    router.get('/admin/products/:id/edit' ,isAuthenticated, isAdmin, adminCtlr.productEdit);
+    router.put('/admin/products/:id' ,isAuthenticated, isAdmin, adminCtlr.productUpdate);
+    router.delete('/admin/products/:id' , isAuthenticated, isAdmin , adminCtlr.productDelete);
 
     app.use(router);
 
