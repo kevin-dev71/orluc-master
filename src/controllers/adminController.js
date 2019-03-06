@@ -6,8 +6,9 @@ const controller = {};
 
 // PRODUCTS ADMIN
 controller.productListPaginated = async (req, res) => {
-  /*const products = await Product.find({}).sort({date: 'desc'});
-    res.render('admin/products/index' , { products });*/
+  var scripts = [
+    { script: '/js/confirm.js' }
+  ];
   let perPage = 4;
   let page = req.query.page || 1;
 
@@ -22,7 +23,8 @@ controller.productListPaginated = async (req, res) => {
         res.render("admin/products/index", {
           products,
           current: page,
-          pages: Math.ceil(count / perPage)
+          pages: Math.ceil(count / perPage),
+          scripts: scripts
         });
       });
     });

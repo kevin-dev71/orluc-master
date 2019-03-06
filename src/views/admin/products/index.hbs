@@ -32,7 +32,7 @@
           <td>
             <form action="/admin/products/{{_id}}?_method=DELETE" method="POST">
               <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn btn-danger btn-block btn-sm"> <i class="fas fa-trash-alt"></i> Delete</button>
+              <button onclick="modalConfirm(this, event)" class="btn btn-danger btn-block btn-sm"> <i class="fas fa-trash-alt"></i> Delete</button>
             </form>
           </td>
           <td>

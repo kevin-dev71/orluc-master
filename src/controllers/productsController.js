@@ -4,7 +4,7 @@ const controller = {};
 
 // API ROUTES
 controller.productListPaginated = async (req, res) => {
-  let perPage = 3;
+  let perPage = 6;
   let page = req.query.page || 1;
 
   Product.find({}) // finding all documents

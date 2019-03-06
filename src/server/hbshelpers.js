@@ -4,12 +4,6 @@ helpers.trimString  = (text , startstring, endstring) => {
     return text.substring(startstring , endstring);
 };
 
-helpers.section = (name, options) => {
-    if(!this._sections) this._sections = {};
-    this._sections[name] = options.fn(this);
-    return null;
-}
-
 helpers.paginationRow  = (pages , current) => {
 
     let nav = `

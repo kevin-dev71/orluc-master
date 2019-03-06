@@ -5,8 +5,10 @@ const passport  = require('passport');
 const controller = {};
 
 controller.index = async (req, res) => {
-    var scripts = [{ script: '/js/infiniteScroll.js' }];
-    let perPage = 3;
+    var scripts = [
+        { script: '/js/infiniteScroll.js' }
+    ];
+    let perPage = 6;
     let page = req.query.page || 1;
 
     Product.find({}) // finding all documents
