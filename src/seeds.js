@@ -1,5 +1,6 @@
 const User      = 	require("./models/User");
 const Product   =   require("./models/Product");
+const Tag       =   require("./models/Tag");
 const mongoose 	= 	require("mongoose");
 const bcrypt    =   require('bcryptjs');
 const faker     =   require('faker');
@@ -18,6 +19,9 @@ async function seedDB(){
     await Product.deleteMany({}, function(err) { 
       console.log('Products removed') 
     });
+    await Tag.deleteMany({}, function(err) { 
+      console.log('Tags removed') 
+    });
     // Create a Admin User
     await User.create(adminUser, function(e) {
 	    if (e) {
@@ -25,7 +29,7 @@ async function seedDB(){
 	    }
     });
     // Create 90 products
-    for(let i = 0; i < 25; i++) {
+    for(let i = 0; i < 8; i++) {
         const product = new Product();
         product.category = faker.commerce.department();
         product.name = faker.commerce.productName();
@@ -37,8 +41,8 @@ async function seedDB(){
         await product.save(err => {
           if (err) { return next(err); }
         });
-      }
-      console.log("BD Seeded with 25 products and Admin User");
+      }      
+      console.log("BD Seeded with 25 products and Admin User And 5 Tags");
 }
 
 module.exports = seedDB;

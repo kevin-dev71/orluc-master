@@ -82,4 +82,8 @@ controller.logout = (req, res) => {
     res.redirect('/');
 }
 
+controller.userFidelity = (req , res) => {
+    res.render('fidelity/index');
+}
+
 module.exports = controller;

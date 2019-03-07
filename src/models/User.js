@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   email:    { type: String, required: true },
   password: { type: String, required: true },
   isAdmin:  { type: Boolean, default: false },
+  fidelity: { type: Number, default: 0},
   date:     { type: Date, default: Date.now }
 });
 
