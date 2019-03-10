@@ -23,6 +23,8 @@ module.exports = app => {
 
     router.get('/fidelity' , isAuthenticated, homeCtlr.userFidelity);
 
+    router.get('/products/:id' , adminCtlr.productShow);
+
     // =================== PRODUCTS ADMIN ROUTES =============
     //Pagination
     router.get('/admin/products' ,isAuthenticated, isAdmin, adminCtlr.productListPaginated);

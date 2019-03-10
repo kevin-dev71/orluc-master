@@ -1,6 +1,7 @@
 const Product       = require("../models/Product");
 const User          = require("../models/User");
 const Tag           = require("../models/Tag");
+const sidebar       = require('../helpers/dashboard/sidebar');
 const { unlink }    = require("fs-extra");
 const path          = require("path");
 
@@ -55,20 +56,26 @@ controller.productCreate = async (req, res) => {
   try {
     await Tag.insertMany( mapTag , { ordered: false } );
   } catch (e) {
-    
+    console.log("hay tags repetidos");
   }
   req.flash("success", "Producto guardado con exito");
   res.redirect("/admin/products/new");
 };
 
 controller.productShow = async (req, res) => {
+  var styles = [
+    { style: '/css/products/show.css' }
+  ];
   const product = await Product.findById(req.params.id);
-  res.render("admin/products/show", { product });
+  res.render("admin/products/show", { product , styles });
 };
 
 controller.productEdit = async (req, res) => {
+  var scripts = [
+    { script: '/js/awesomplete.js' }
+  ];
   const product = await Product.findById(req.params.id);
-  res.render("admin/products/edit", { product });
+  res.render("admin/products/edit", { product , scripts });
 };
 
 controller.productUpdate = async (req, res) => {
@@ -77,7 +84,18 @@ controller.productUpdate = async (req, res) => {
     const imagePath = "/uploads/" + req.file.filename;
     req.body.product.image = imagePath;
   }
+  // Tags update
+  let mapTag = req.body.product.tags.replace(/\s/g,'').split(',').map(function(tag) {
+    return { "name": tag };
+  });
+  try {
+    await Tag.insertMany( mapTag , { ordered: false } );
+  } catch (e) {
+    console.log("hay tags repetidos");
+  }
+  
   await Product.findByIdAndUpdate(req.params.id, req.body.product);
+  
   req.flash("success", "Product Updated Successfully");
   res.redirect("/admin/products");
 };
@@ -85,23 +103,39 @@ controller.productUpdate = async (req, res) => {
 controller.productDelete = async (req, res) => {
   const product = await Product.findByIdAndDelete(req.params.id);
   if (product) {
-    await unlink(path.resolve("./src/public/" + product.image));
-    await product.remove();
-    req.flash("success", "Producto Eliminado con exito");
-    res.redirect("/admin/products");
+    try{
+      await unlink(path.resolve("./src/public/" + product.image));
+      await product.remove();
+      req.flash("success", "Producto Eliminado con exito");
+      res.redirect("/admin/products");
+    }
+    catch(e){
+      console.log("no se consiguio imagen relacionado al producto con id: " + product._id);
+      req.flash("success", "Producto Eliminado con exito!!!");
+      res.redirect("/admin/products");
+    }    
   } else {
     req.flash("error", "No se Pudo eliminar el producto");
     res.redirect("/admin/products");
   }
 };
 
-controller.dashboard = (req , res) => {
-  res.render("admin/dashboard/index");
+// ================ DASHBOARD =========================
+
+controller.dashboard = async (req , res) => {
+  let viewModel = {};
+  viewModel = await sidebar(viewModel);
+  res.render("admin/dashboard/index" , {viewModel});
 }
 
+// ================ FIDELITY =========================
+
 controller.fidelity = async (req , res) => {
-  var scripts = [
+  let scripts = [
     { script: '/js/fidelity.js' }
+  ];
+  let styles = [
+    { style: '/css/admin/fidelity.css' }
   ];
   let perPage = 8;
   let page = req.query.page || 1;
@@ -118,7 +152,8 @@ controller.fidelity = async (req , res) => {
           users,
           current: page,
           pages: Math.ceil(count / perPage),
-          scripts
+          scripts ,
+          styles
         });
       });
     });

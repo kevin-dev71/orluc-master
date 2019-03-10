@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedor.appendChild(document.createElement('hr'));
         if(finalPage == viewModel.pages ){
             document.getElementById('load-more-btn').style.display = 'none';
+            document.getElementById('no-more-products-to-load').classList.remove('d-none');
         }
 	});
 

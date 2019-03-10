@@ -8,8 +8,8 @@
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">{{description}}</p>
                     <p>USD {{sale_price}}</p>
-                    <a href="#" class="btn btn-primary">
-                        View
+                    <a href="/products/{{_id}}" class="btn btn-primary">
+                        Ver
                     </a>
                 </div>
             </div>
@@ -27,3 +27,7 @@
         </a>
     </div>    
 {{/if}}
+
+<div id="no-more-products-to-load" class="alert alert-info text-center d-none" role="alert">
+  Ya no hay mas productos para cargar
+</div>

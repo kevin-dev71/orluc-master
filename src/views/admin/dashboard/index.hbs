@@ -1,17 +1,88 @@
-<h1>dashboard</h1>
-<div class="row">
-    <div class="col-md-4">
-        <div class="jumbotron">
-            <h1 class="display-4">Hello, world!</h1>
-            <p class="lead">Algunas estadisticas por aqui</p>
-            <hr class="my-4">
-            <p>Algo por aca</p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p>
+<!-- HEADER -->
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fas fa-chart-bar"></i> Algunas Estadisticas
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a href="/admin/products/new" class="btn btn-primary btn-block">
+          <i class="fas fa-plus"></i> Agregar Producto
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="/admin/fidelity" class="btn btn-warning btn-block">
+          <i class="fas fa-plus"></i> Premiar Cliente
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="products-stats">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <h4>Productos con mas likes</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>pronto las estadisticas</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-md-3">
+        <div class="card text-center bg-primary text-white mb-3">
+          <div class="card-body">
+            <h3>Cantidad de Productos</h3>
+            <h4 class="display-4">
+              <i class="fas fa-pencil-alt"></i> {{viewModel.sidebar.totalProducts}}
+            </h4>
+          </div>
+        </div>
+
+        <div class="card text-center bg-success text-white mb-3">
+          <div class="card-body">
+            <h3>Capital Invertido</h3>
+            <h6 class="text-white">
+              <i class="fas fa-folder"></i> {{viewModel.sidebar.totalCost}} $
+            </h6>
+          </div>
+        </div>
+
+        <div class="card text-center bg-warning text-white mb-3">
+          <div class="card-body">
+            <h3>Usuarios</h3>
+            <h4 class="display-4">
+              <i class="fas fa-users"></i> {{viewModel.sidebar.totalUsers}}
+            </h4>
+            <!-- <a href="users.html" class="btn btn-outline-light btn-sm">View</a> -->
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-8">
-        <h2>Algo de Estadisticas aqui</h2>
-    </div>
-</div>
+  </div>
+</section>
