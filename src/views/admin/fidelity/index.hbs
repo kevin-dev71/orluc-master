@@ -18,11 +18,16 @@
                 <img src="https://preview.ibb.co/miQjb7/photography4.jpg">
             </div>
             <div class="userImg">
-                <img src="https://image.ibb.co/es4AG7/author4.jpg">
+                {{#if photo}}
+                    <img src="{{photo}}">
+                {{else}}
+                    <img src="https://image.ibb.co/es4AG7/author4.jpg">
+                {{/if}}
             </div>
             <div class="userDescription">
                 <h5>{{name}}</h5>
                 <p>{{email}}</p>
+                <p>Registrado por: {{provider}}</p>
 
 
                 <div class="followrs">

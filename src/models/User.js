@@ -9,6 +9,9 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   isAdmin:  { type: Boolean, default: false },
   fidelity: { type: Number, default: 0},
+  provider: { type: String, default: 'local' },
+	provider_id: {type: String, unique: true},
+	photo: String,
   date:     { type: Date, default: Date.now }
 });
 

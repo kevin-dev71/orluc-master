@@ -10,6 +10,10 @@ const { isAuthenticated, isAdmin } = require('../middlewares/auth');
 
 module.exports = app => {
 
+    // =============== FACEBOOK AUTH ==============
+    app.get('/auth/facebook', homeCtlr.facebook);
+    app.get('/auth/facebook/callback', homeCtlr.facebookCallback);
+
     // =============== HOME ROUTES ==============
     router.get('/' , homeCtlr.index);
 

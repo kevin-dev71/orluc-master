@@ -82,6 +82,22 @@ controller.logout = (req, res) => {
     res.redirect('/');
 }
 
+// ========= FACEBOOK AUTH ===========
+controller.facebook = (req , res, next) => {
+    passport.authenticate('facebook' , { scope : ['email'] })(req, res, next);
+}
+
+/*controller.facebook = () => {
+    passport.authenticate('facebook');
+}*/
+
+controller.facebookCallback = (req , res, next) => {
+    passport.authenticate('facebook', {
+        successRedirect: '/', 
+        failureRedirect: '/login' 
+    })(req, res, next);
+}
+
 controller.userFidelity = (req , res) => {
     res.render('fidelity/index');
 }
