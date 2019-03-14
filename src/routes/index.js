@@ -29,6 +29,10 @@ module.exports = app => {
 
     router.get('/products/:id' , adminCtlr.productShow);
 
+    // =============== PRODUCTS  ==============
+
+    router.get('/products' , productsCtlr.index);
+
     // =================== PRODUCTS ADMIN ROUTES =============
     //Pagination
     router.get('/admin/products' ,isAuthenticated, isAdmin, adminCtlr.productListPaginated);
@@ -42,12 +46,16 @@ module.exports = app => {
     // DASHBOARD ADMIN ROUTE
     router.get('/admin/dashboard' ,isAuthenticated, isAdmin, adminCtlr.dashboard);
 
+    router.get('/admin/catalog' ,isAuthenticated, isAdmin, adminCtlr.catalogGenerator);    
+
     // FIDELITY ADMIN ROUTE
     router.get('/admin/fidelity' ,isAuthenticated, isAdmin, adminCtlr.fidelity);
 
     // ============== API ROUTES ====================
     // PRODUCTS
     router.get('/api/products' , productsCtlr.productListPaginated);
+    router.get('/api/allProducts' , productsCtlr.getProducts); // hay que refactorizar esto
+    
 
     // TAGS
     router.get('/api/tags' , tagsCtlr.tagList);
@@ -55,8 +63,11 @@ module.exports = app => {
     // FIDELITY API ADMIN ROUTE
     router.get('/admin/fidelity/:id' ,isAuthenticated, isAdmin, adminCtlr.fidelityApiPost); // deberia ser POST
 
-    app.use(router);
+    // PDF CATALOG GENERATOR
 
-    
+    router.get('/admin/pdf/productsCatalog' , adminCtlr.productsPDF); 
+    router.get('/admin/pdf/generate' , adminCtlr.convertBodyToPDF); 
+
+    app.use(router);
 
 }

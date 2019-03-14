@@ -5,28 +5,7 @@ const passport  = require('passport');
 const controller = {};
 
 controller.index = async (req, res) => {
-    var scripts = [
-        { script: '/js/infiniteScroll.js' }
-    ];
-    let perPage = 6;
-    let page = req.query.page || 1;
-
-    Product.find({}) // finding all documents
-        .skip(perPage * page - perPage) // in the first page the value of the skip is 0
-        .limit(perPage) // output just 9 items
-        .sort({date: 'desc'}) 
-        .exec((err, products) => {
-            Product.countDocuments((err, count) => {
-                // count to calculate the number of pages
-                if (err) return next(err);
-                res.render("index", {
-                    products,
-                    current: page,
-                    pages: Math.ceil(count / perPage),
-                    scripts: scripts
-                });
-            });
-        });
+    res.render('index', {layout: 'landing.hbs'});
 }
 
 controller.login = (req , res) => {

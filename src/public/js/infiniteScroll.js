@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h5 class="card-title">${product.name}</h5>
                     <p class="card-text">${product.description}</p>
                     <p>USD ${product.sale_price}</p>
-                    <a href="#" class="btn btn-primary">
+                    <a href="/products/${product._id}" class="btn btn-primary">
                         View
                     </a>
                 </div>

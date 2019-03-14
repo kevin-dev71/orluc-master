@@ -4,6 +4,7 @@ const Tag           = require("../models/Tag");
 const sidebar       = require('../helpers/dashboard/sidebar');
 const { unlink }    = require("fs-extra");
 const path          = require("path");
+const puppeteer     = require('puppeteer');
 
 const controller = {};
 
@@ -128,6 +129,13 @@ controller.dashboard = async (req , res) => {
   res.render("admin/dashboard/index" , {viewModel});
 }
 
+controller.catalogGenerator = async (req , res) => {
+  var scripts = [
+    { script: '/js/input-product-finder.js' }
+  ];
+  res.render("admin/catalog/index" , {scripts});
+}
+
 // ================ FIDELITY =========================
 
 controller.fidelity = async (req , res) => {
@@ -175,6 +183,44 @@ controller.fidelityApiPost = (req , res) => {
       res.status(200).json(updatedUser);
     }
   });
+};
+
+// ======================= PRODUCTS CATALOG PDF REPORT ====================
+
+controller.productsPDF = async (req, res) => {
+  var styles = [
+    { style: '/css/admin/product-catalog.css' }
+  ];
+  let scripts = [    
+    { script: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js' } ,
+    { script: '/js/html2canvas.min.js' } ,
+    { script: '/js/genPDF.js' }     
+  ];
+  const products = await Product.find({}).sort({ name: 1 });
+  res.render("admin/catalog/report" , { products , styles , scripts });
+};
+
+controller.convertBodyToPDF = async (req, res) => {
+  try{
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const options = {
+      path: __dirname.split('controllers')[0] + '/public/reportes/report.pdf',
+      format: 'A4'
+    }
+
+    await page.goto('http://localhost:3000/admin/pdf/productsCatalog' , {waitUntil: 'networkidle2'});
+    await page.pdf(options);
+    
+    await browser.close();
+
+    console.log('pdf creado');
+    res.download(__dirname.split('controllers')[0] + '/public/reportes/report.pdf');
+
+  } catch (e){
+    console.log('error converting PDF' , e);
+  }
 }
 
 module.exports = controller;
