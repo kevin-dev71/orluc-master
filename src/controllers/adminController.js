@@ -41,7 +41,11 @@ controller.productList = async (req, res) => {
 
 controller.productForm = (req, res) => {
   var scripts = [
+    { script: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js'},
     { script: '/js/awesomplete.js' }
+  ];
+  var styles = [
+    { style: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css'}
   ];
   res.render("admin/products/new" , { scripts });
 };
@@ -73,7 +77,11 @@ controller.productShow = async (req, res) => {
 
 controller.productEdit = async (req, res) => {
   var scripts = [
+    { script: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js'},
     { script: '/js/awesomplete.js' }
+  ];
+  var styles = [
+    { style: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css'}
   ];
   const product = await Product.findById(req.params.id);
   res.render("admin/products/edit", { product , scripts });
