@@ -5,8 +5,9 @@ const homeCtlr      = require('../controllers/homeController');
 const adminCtlr     = require('../controllers/adminController');
 const productsCtlr  = require('../controllers/productsController');
 const tagsCtlr      = require('../controllers/tagController');
+const usersCtlr      = require('../controllers/usersController');
 
-const { isAuthenticated, isAdmin } = require('../middlewares/auth');
+const { isAuthenticated, isNotAuthenticated, isAdmin } = require('../middlewares/auth');
 
 module.exports = app => {
 
@@ -17,17 +18,20 @@ module.exports = app => {
     // =============== HOME ROUTES ==============
     router.get('/' , homeCtlr.index);
 
-    router.get('/login' , homeCtlr.login);
-    router.post('/users/login' , homeCtlr.signin);
+    router.get('/login' , isNotAuthenticated, homeCtlr.login);
+    router.post('/users/login' , isNotAuthenticated, homeCtlr.signin);
 
-    router.get('/register' , homeCtlr.register);
-    router.post('/users/register' , homeCtlr.signup);
+    router.get('/register' , isNotAuthenticated, homeCtlr.register);
+    router.post('/users/register' , isNotAuthenticated, homeCtlr.signup);
 
     router.get('/logout' , homeCtlr.logout);
 
     router.get('/fidelity' , isAuthenticated, homeCtlr.userFidelity);
 
     router.get('/products/:id' , adminCtlr.productShow);
+
+    // =============== USERS ==================
+    router.get('/users/profile' , isAuthenticated, usersCtlr.profile);
 
     // =============== PRODUCTS  ==============
 

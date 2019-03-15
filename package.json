@@ -37,7 +37,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore src/views src/public",
     "start": "cross-env NODE_ENV=production node src/index.js"
   },
   "keywords": [],

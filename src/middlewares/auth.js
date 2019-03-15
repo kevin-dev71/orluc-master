@@ -9,6 +9,14 @@ helpers.isAuthenticated = (req, res, next) => {
   }  
 };
 
+helpers.isNotAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/users/profile');
+  }  
+};
+
 helpers.isAdmin = (req, res, next) => {
   if(req.user.isAdmin) {
     next();
