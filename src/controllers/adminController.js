@@ -47,7 +47,7 @@ controller.productForm = (req, res) => {
   var styles = [
     { style: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css'}
   ];
-  res.render("admin/products/new" , { scripts });
+  res.render("admin/products/new" , { scripts , styles});
 };
 
 controller.productCreate = async (req, res) => {
@@ -84,7 +84,7 @@ controller.productEdit = async (req, res) => {
     { style: 'https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css'}
   ];
   const product = await Product.findById(req.params.id);
-  res.render("admin/products/edit", { product , scripts });
+  res.render("admin/products/edit", { product , scripts, styles });
 };
 
 controller.productUpdate = async (req, res) => {
@@ -199,13 +199,14 @@ controller.productsPDF = async (req, res) => {
   var styles = [
     { style: '/css/admin/product-catalog.css' }
   ];
-  let scripts = [    
+  /*let scripts = [    
     { script: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js' } ,
     { script: '/js/html2canvas.min.js' } ,
-    { script: '/js/genPDF.js' }     
-  ];
+    { script: '/js/genPDF.js' }
+  ];*/
   const products = await Product.find({}).sort({ name: 1 });
-  res.render("admin/catalog/report" , { products , styles , scripts });
+
+  res.render("admin/catalog/report" , { products , styles });
 };
 
 controller.convertBodyToPDF = async (req, res) => {
@@ -213,12 +214,20 @@ controller.convertBodyToPDF = async (req, res) => {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
     const options = {
       path: __dirname.split('controllers')[0] + '/public/reportes/report.pdf',
-      format: 'A4'
+      format: 'A4',
+      landscape: true      
     }
 
     await page.goto('http://localhost:3000/admin/pdf/productsCatalog' , {waitUntil: 'networkidle2'});
+    /*
+    In case you need to log in first to generate a PDF from a protected page, first you need to navigate to the login page, inspect the form elements for ID or name, fill them in, then submit the form:
+
+    await page.type('#email', process.env.PDF_USER)
+await page.type('#password', process.env.PDF_PASSWORD)
+await page.click('#submit')*/
     await page.pdf(options);
     
     await browser.close();
@@ -228,6 +237,7 @@ controller.convertBodyToPDF = async (req, res) => {
 
   } catch (e){
     console.log('error converting PDF' , e);
+    res.send("Error Creating PDF");
   }
 }
 

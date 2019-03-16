@@ -69,7 +69,7 @@ module.exports = app => {
 
     // PDF CATALOG GENERATOR
 
-    router.get('/admin/pdf/productsCatalog' , adminCtlr.productsPDF); 
+    router.get('/admin/pdf' , adminCtlr.productsPDF); 
     router.get('/admin/pdf/generate' , adminCtlr.convertBodyToPDF); 
 
     app.use(router);

@@ -1,7 +1,20 @@
-html, body {
-    font-family: 'Ubuntu', sans-serif;
+html,
+body {
+  font-family: "Ubuntu", sans-serif;
 }
 
 .loading {
-    background: transparent url('https://loading.io/spinners/typing/lg.-text-entering-comment-loader.gif') center no-repeat;
+  background: transparent
+    url("https://loading.io/spinners/typing/lg.-text-entering-comment-loader.gif")
+    center no-repeat;
+}
+
+@page {
+    margin: 60px 0px;
+  }
+
+@media print {
+  .breaker-avoid {
+    page-break-inside: avoid;
+  }
 }
