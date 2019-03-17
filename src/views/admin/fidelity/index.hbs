@@ -4,7 +4,8 @@
     <div class="row">
       <div class="col-md-6">
         <h1>
-          <i class="fas fa-cog"></i> Lista de Usuarios</h1>
+          <i class="fas fa-users"></i> Mis Clientes
+        </h1>
       </div>
     </div>
   </div>
@@ -18,48 +19,46 @@
         <a href="/admin/products/new" class="btn btn-primary btn-block">
           <i class="fas fa-plus"></i> Agregar Producto
         </a>
-      </div>     
+      </div>
       <div class="col-md-3">
         <a href="/admin/pdf/generate" class="btn btn-success btn-block">
           <i class="fas fa-plus"></i> Generar Catalogo
         </a>
-      </div> 
+      </div>
     </div>
   </div>
 </section>
 
-<div class="row userMain">
+<div class="row">
     {{#each users}}
-    <div class="col-md-3 col-sm-4">
-        <div class="userBlock">
-            <div class="backgrounImg">
-                <img src="https://preview.ibb.co/miQjb7/photography4.jpg">
-            </div>
-            <div class="userImg">
-                {{#if photo}}
-                    <img src="{{photo}}">
-                {{else}}
-                    <img src="https://image.ibb.co/es4AG7/author4.jpg">
-                {{/if}}
-            </div>
-            <div class="userDescription">
-                <h5>{{name}}</h5>
-                <p>{{email}}</p>
-                <p>Registrado por: {{provider}}</p>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="tile">
+            <div class="wrapper">
+                <div class="header">{{name}}</div>
 
-
-                <div class="followrs">
-                    <span class="number">{{fidelity}}</span>
-                    <span>Puntos de Fidelidad</span>
+                <div class="banner-img img-thumbnail">
+                    <img src="{{#if photo}}{{photo}}{{else}}https://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png{{/if}}" alt="Image 1">
                 </div>
-                <a class="premiar" href="#" data-userid={{_id}}>
-                    <button class="btn">Premiar</button>
-                </a>
-                <a class="redeem" href="#" data-userid={{_id}}>
-                    <button class="btn btn-success">Redeem</button>
-                </a>
-            </div>
 
+                <div class="stats">
+
+                    <div>
+                        <strong>PUNTOS</strong> {{fidelity}} 
+                    </div>
+
+                    <div>
+                        <strong>CANJES</strong> {{canjes}}
+                    </div>
+
+                </div>
+                
+
+                <div class="footer">
+                    <a href="#" class="btn btn-success">Redeem</a>
+                    <a href="#" class="btn btn-primary">+1</a>
+                    <a href="#" class="btn btn-danger">Editar</a>
+                </div>
+            </div>
         </div>
     </div>
     {{/each}}
