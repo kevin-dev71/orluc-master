@@ -22,11 +22,13 @@
 
 .banner-img {
 	padding: 5px 5px 0;
+	max-height: 120px;
 }
 
 .banner-img img {
 	width: 100%;
 	border-radius: 5px;
+	max-height: 120px;
 }
 
 .dates{
