@@ -1,13 +1,16 @@
 html,
 body {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif;  
 }
 
-.loading {
-  background: transparent
-    url("https://loading.io/spinners/typing/lg.-text-entering-comment-loader.gif")
-    center no-repeat;
+.bg-orluc{
+   background-color: rgba(14,140,69,0.9) !important;
 }
+
+
+
+
+/* ================ CONVERITR A PDF ================== */
 
 @page {
     margin: 60px 0px;

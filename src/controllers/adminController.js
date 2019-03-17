@@ -221,7 +221,7 @@ controller.convertBodyToPDF = async (req, res) => {
       landscape: true      
     }
 
-    await page.goto('http://localhost:3000/admin/pdf/productsCatalog' , {waitUntil: 'networkidle2'});
+    await page.goto('http://localhost:3000/admin/pdf' , {waitUntil: 'networkidle2'});
     /*
     In case you need to log in first to generate a PDF from a protected page, first you need to navigate to the login page, inspect the form elements for ID or name, fill them in, then submit the form:
 

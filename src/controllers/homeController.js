@@ -78,7 +78,10 @@ controller.facebookCallback = (req , res, next) => {
 }
 
 controller.userFidelity = (req , res) => {
-    res.render('fidelity/index');
+    let styles = [
+        {style: '/css/fidelity/fidelity.css'}
+    ];
+    res.render('fidelity/index' , {styles , user: res.locals.user});
 }
 
 module.exports = controller;
