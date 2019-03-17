@@ -193,6 +193,24 @@ controller.fidelityApiPost = (req , res) => {
   });
 };
 
+controller.redeemApiPost = (req , res) => {
+  User.findOneAndUpdate(
+    {
+      _id : req.params.id
+    },
+    { $inc: { canjes: 1 } , fidelity: 0 } ,
+    {new : true } ,
+    function(err , updatedUser){
+    if(err){
+      //req.flash("error", "Redeem No actualizado satisfactoriamente");
+      res.status(400).json(err);
+    } else {
+      //req.flash("success", "Redeem satisfactoriamente");
+      res.status(200).json(updatedUser);
+    }
+  });
+};
+
 // ======================= PRODUCTS CATALOG PDF REPORT ====================
 
 controller.productsPDF = async (req, res) => {

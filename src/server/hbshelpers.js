@@ -102,7 +102,7 @@ helpers.pdfBreak = products => {
                         <div class="single_menu_list">
                             <img src="${products[index - 1].image}" alt="">
                             <div class="menu_content">
-                                <h4>${products[index - 1].name} <span>$${products[index - 1].sale_price}</span></h4>
+                                <h4>${products[index - 1].name} <span>₡${products[index - 1].sale_price}</span></h4>
                                 <p>${products[index - 1].description}</p>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ helpers.pdfBreak = products => {
                         <div class="single_menu_list">
                             <img src="${products[index].image}" alt="">
                             <div class="menu_content">
-                                <h4>${products[index].name} <span>$${products[index].sale_price}</span></h4>
+                                <h4>${products[index].name} <span>₡${products[index].sale_price}</span></h4>
                                 <p>${products[index].description}</p>
                             </div>
                         </div>
@@ -126,7 +126,7 @@ helpers.pdfBreak = products => {
                         <div class="single_menu_list">
                             <img src="${product.image}" alt="">
                             <div class="menu_content">
-                                <h4>${product.name} <span>$${product.sale_price}</span></h4>
+                                <h4>${product.name} <span>₡${product.sale_price}</span></h4>
                                 <p>${product.description}</p>
                             </div>
                         </div>
@@ -135,6 +135,23 @@ helpers.pdfBreak = products => {
             `
         }
     });
+    return contenedor;
+};
+
+
+helpers.fidelityCount = user => {
+    let contenedor = ``;
+    for(let i = 1 ; i <= 10; i++){
+        if(i <= user.fidelity){
+            if(i == 10){
+                contenedor += `<div class="stamp stamp-add"><i class="fa fa-gift"></i></div>`;    
+            } else {
+                contenedor += `<div class="stamp stamp-add">${i}</div>`;
+            }
+        } else {
+            contenedor += `<div class="stamp">${i}</div>`;
+        }
+    }
     return contenedor;
 };
 

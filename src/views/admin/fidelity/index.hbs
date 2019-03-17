@@ -1,5 +1,5 @@
 <!-- HEADER -->
-<header id="main-header" class="py-2 bg-primary text-white">
+<header id="main-header" class="py-2 bg-orluc text-white">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <a href="/admin/products/new" class="btn btn-primary btn-block">
+        <a href="/admin/products/new" class="btn btn-warning btn-block">
           <i class="fas fa-plus"></i> Agregar Producto
         </a>
       </div>
@@ -43,19 +43,19 @@
                 <div class="stats">
 
                     <div>
-                        <strong>PUNTOS</strong> {{fidelity}} 
+                        <strong>PUNTOS</strong> <span class="puntos">{{fidelity}}</span>
                     </div>
 
                     <div>
-                        <strong>CANJES</strong> {{canjes}}
+                        <strong>CANJES</strong> <span class="redeem_puntos">{{canjes}}</span>
                     </div>
 
                 </div>
                 
 
                 <div class="footer">
-                    <a href="#" class="btn btn-success">Redeem</a>
-                    <a href="#" class="btn btn-primary">+1</a>
+                    <a href="#" class="btn btn-success redeem" data-userid={{_id}}>Redeem</a>
+                    <a href="#" class="btn btn-primary premiar" data-userid={{_id}}>+1</a>
                     <a href="#" class="btn btn-danger">Editar</a>
                 </div>
             </div>

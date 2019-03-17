@@ -55,6 +55,10 @@ module.exports = app => {
     // FIDELITY ADMIN ROUTE
     router.get('/admin/fidelity' ,isAuthenticated, isAdmin, adminCtlr.fidelity);
 
+    // FIDELITY API ADMIN ROUTE
+    router.get('/admin/fidelity/:id' ,isAuthenticated, isAdmin, adminCtlr.fidelityApiPost); // deberia ser POST
+    router.get('/admin/redeem/:id' ,isAuthenticated, isAdmin, adminCtlr.redeemApiPost);
+
     // ============== API ROUTES ====================
     // PRODUCTS
     router.get('/api/products' , productsCtlr.productListPaginated);
@@ -63,10 +67,7 @@ module.exports = app => {
 
     // TAGS
     router.get('/api/tags' , tagsCtlr.tagList);
-
-    // FIDELITY API ADMIN ROUTE
-    router.get('/admin/fidelity/:id' ,isAuthenticated, isAdmin, adminCtlr.fidelityApiPost); // deberia ser POST
-
+    
     // PDF CATALOG GENERATOR
 
     router.get('/admin/pdf' , adminCtlr.productsPDF); 

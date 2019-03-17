@@ -1,21 +1,6 @@
-html { 
-  background: url("https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1355&q=80") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-body{
-  padding-bottom: 70px;
-  background-color: transparent;
-}
-
-.box{
-  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+.fidelitybox{
   color: #000;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.6);
 }
 
 .stamp {
