@@ -6,7 +6,7 @@
           Account Login
         </h1>
       </div>
-        <img class="rounded-circle mx-auto d-block logo m-4" src="/images/logo.png" alt="Logo">
+      <img class="rounded-circle mx-auto d-block logo m-4" src="/images/logo.png" alt="Logo">
       <div class="card-body bg-transparent">
         <form action="/users/login" method="POST">
           <div class="form-group">
@@ -16,11 +16,12 @@
             <input type="password" class="form-control" name="password" placeholder="Password">
           </div>
           <button class="btn btn-primary btn-block">
-            Login 
+            Login
           </button>
-          <div class="form-group">
-            <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+          <div class="form-group mt-2">
+            <a href="/auth/facebook" class="btn btn-lg btn-block onl_btn-facebook text-white" title="Facebook">
               <i class="fab fa-facebook"></i> Login con facebook
+              <span class="hidden-xs"></span>
             </a>
           </div>
         </form>

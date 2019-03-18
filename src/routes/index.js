@@ -32,6 +32,7 @@ module.exports = app => {
 
     // =============== USERS ==================
     router.get('/users/profile' , isAuthenticated, usersCtlr.profile);
+    router.put('/users/:id' , isAuthenticated, usersCtlr.update);
 
     // =============== PRODUCTS  ==============
 
@@ -75,6 +76,7 @@ module.exports = app => {
 
     // SEARCH ROUTES AJAX
     router.get('/admin/search/products' , adminCtlr.productSearchList);
+    router.get('/admin/search/users' , adminCtlr.userSearchList);
 
     app.use(router);
 

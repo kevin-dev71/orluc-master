@@ -38,7 +38,7 @@ passport.deserializeUser((id, done) => {
 });
 
 // Configuración del autenticado con Facebook
-passport.use(new FacebookStrategy({
+passport.use('facebook' , new FacebookStrategy({
   clientID			: process.env.FACEBOOK_APP_ID,
   clientSecret	: process.env.FACEBOOK_APP_SECRET,
   callbackURL	 : '/auth/facebook/callback',
@@ -56,22 +56,47 @@ passport.use(new FacebookStrategy({
   // por Facebook, ya que cada proveedor entrega los datos en el JSON con
   // un nombre diferente.
   // Passport esto lo sabe y nos lo pone más sencillo con ese campo
-  User.findOne({provider_id: profile.id}, function(err, user) {
-    if(err) throw(err);
-    if(!err && user!= null) return done(null, user);
+  User.findOne({
+    $or: [
+      {'facebook.provider_id': profile.id},
+      {'email': profile.emails[0].value}
+    ]    
+  }, function(err, user) {
+    if(err) return done(err);//throw(err);
+    if(!err && user!= null) {
+      if (user.facebook.provider_id == undefined) {
+        user.facebook.provider_id = profile.id;
+        user.facebook.provider		  = profile.provider,
+        user.facebook.token       = accessToken;
+        user.facebook.email = profile.emails[0].value;
+        //user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+        user.facebook.name = profile.displayName;
+        user.facebook.photo = profile.photos[0].value;
+        user.save();
+      }
+      return done(null, user);
+    } else {
+      var user = new User({
+        'facebook.provider_id'	: profile.id,
+        'facebook.provider'		  : profile.provider,
+        'facebook.token'        : accessToken,
+        'facebook.name'         : profile.displayName,
+        'facebook.photo'        : profile.photos[0].value,
+        'facebook.email'        : profile.emails[0].value,
+        name				: profile.displayName,
+        email       : profile.emails[0].value,
+        password    : "nopassword"
+      });
+      user.save(function(err) {
+        if(err){
+          console.log(err);
+          throw err;
+        }
+        return done(null, user);
+      });
+    }
     // Al igual que antes, si el usuario ya existe lo devuelve
     // y si no, lo crea y salva en la base de datos
-    var user = new User({
-      provider_id	: profile.id,
-      provider		 : profile.provider,
-      name				 : profile.displayName,
-      photo				: profile.photos[0].value,
-      email       : profile.emails[0].value,
-      password    : "nopassword"
-    });
-    user.save(function(err) {
-      if(err) throw err;
-      done(null, user);
-    });
+    
   });
 }));

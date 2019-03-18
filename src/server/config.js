@@ -26,7 +26,7 @@ module.exports = app => {
         extname: '.hbs',
         helpers: require('./hbshelpers')
     }));
-    app.set('view engine' , '.hbs');
+    app.set('view engine' , '.hbs');    
 
     //		file upload storage path
     const storage = multer.diskStorage({

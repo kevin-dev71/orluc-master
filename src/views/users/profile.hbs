@@ -16,7 +16,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
+                            <form action="/users/{{user._id}}?_method=PUT" method="POST">
 
                                 <div class="form-group row">
                                     <label for="name" class="col-4 col-form-label">Name:</label>
@@ -36,7 +36,7 @@
                                 <div class="form-group row">
                                     <label for="newpass" class="col-4 col-form-label">New Password:</label>
                                     <div class="col-8">
-                                        <input id="newpass" name="newpass" placeholder="New Password"
+                                        <input id="newpass" name="password" placeholder="New Password"
                                             class="form-control here" type="password">
                                     </div>
                                 </div>

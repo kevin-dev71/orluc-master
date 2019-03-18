@@ -38,21 +38,26 @@ controller.signup = async (req, res) => {
     if(password.length < 4) {
         errors.push({ text: 'Password must be at least 4 Characters'});
     }
+    
     if(errors.length > 0) {
         res.render('users/register' , {errors , name , email, password , confirm_password });
     } else {
         const emailUser = await User.findOne({email: email});
         if(emailUser){
-            req.flash('error' , 'Email Already Taken');
+            if(emailUser.facebook.provider){
+                req.flash('error' , 'Este Email ha sido registrado con ' + emailUser.facebook.provider);
+            } else{
+                req.flash('error' , 'Este Email se encuentra registrado');
+            }
             res.redirect('/register');
-        }
-        const newUser = new User({name, email, password});
-        newUser.password = await newUser.encryptPassword(password);
-        await newUser.save();
-        req.flash('success' , 'Registered, please login');
-        res.redirect('/login');
-    }
-    
+        } else {
+            const newUser = new User({name, email, password});
+            newUser.password = await newUser.encryptPassword(password);
+            await newUser.save();
+            req.flash('success' , 'Registrado, Por Favor inicia Sesion');
+            res.redirect('/login');
+        }        
+    }    
 }
 
 controller.logout = (req, res) => {

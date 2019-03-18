@@ -169,9 +169,12 @@ controller.catalogGenerator = async (req, res) => {
 // ================ FIDELITY =========================
 
 controller.fidelity = async (req, res) => {
-  let scripts = [{ script: "/js/fidelity.js" }];
+  let scripts = [
+    { script: "/js/fidelity.js" },
+    { script: "/js/admin/products/search.js" }
+  ];
   let styles = [{ style: "/css/admin/fidelity.css" }];
-  let perPage = 8;
+  let perPage = 4;
   let page = req.query.page || 1;
 
   User.find({}) // finding all documents
@@ -240,7 +243,7 @@ controller.productsPDF = async (req, res) => {
     { script: '/js/html2canvas.min.js' } ,
     { script: '/js/genPDF.js' }
   ];*/
-  const products = await Product.find({}).sort({ name: 1 });
+  const products = await Product.find({ quantity: { $gt: 0 }}).sort({ name: 1 });
 
   res.render("admin/catalog/report", { products, styles });
 };
@@ -251,7 +254,7 @@ controller.convertBodyToPDF = async (req, res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
     const options = {
-      path: __dirname.split("controllers")[0] + "/public/reportes/report.pdf",
+      path: __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf",
       format: "A4",
       landscape: true
     };
@@ -271,7 +274,7 @@ await page.click('#submit')*/
 
     console.log("pdf creado");
     res.download(
-      __dirname.split("controllers")[0] + "/public/reportes/report.pdf"
+      __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf"
     );
   } catch (e) {
     console.log("error converting PDF", e);
@@ -281,15 +284,14 @@ await page.click('#submit')*/
 
 // ====================== PRODUCTS SEARCH AJAX ======================
 controller.productSearchList = async (req, res) => {
-
   if (req.query.search) {
-    const regex = new RegExp(escapeRegex(req.query.search), "gi");
+    const regex = new RegExp(escapeRegex(req.query.search), "gi");    
     // Get all products from DB
     //Product.find({ $or: [{ name: regex }, { tags: regex }] })
     Product.find({ name: regex })
       .sort({ name: 1 })
       .exec((err, products) => {
-        if(err){
+        if (err) {
           res.status(400).json(err);
         } else {
           res.status(200).json({
@@ -300,6 +302,34 @@ controller.productSearchList = async (req, res) => {
   }
 };
 
+// ====================== USERS SEARCH AJAX ======================
+controller.userSearchList = async (req, res) => {
+  if (req.query.search) {
+    const regex = new RegExp(escapeRegex(req.query.search), "gi");
+    const users = await User.aggregate([
+      {
+        $addFields: {
+          stringifyAffiliateId: {
+            $toLower: "$affiliateId"
+          }
+        }
+      },
+      {
+        $match: { 
+          $or : [
+            {stringifyAffiliateId: regex },
+            {name: regex },
+            {email: regex }
+          ]
+        } 
+      },
+      { $sort: {name: 1}}
+    ]);
+    if(users.length > 0) {
+      res.status(200).json(users);
+    }
+  }
+};
 
 /*controller.productSearchListPaginated = async (req, res) => {
   let perPage = 4;

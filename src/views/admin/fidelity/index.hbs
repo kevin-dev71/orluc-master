@@ -30,7 +30,7 @@
           <div class="input-group mb-3">
             <div class="input-group mb-3">
               <input type="text" class="form-control" placeholder="Buscar..." aria-label="Recipient's username"
-                aria-describedby="basic-addon2">
+                aria-describedby="basic-addon2" autofocus>
               <div class="input-group-append">
                 <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
               </div>
@@ -50,7 +50,7 @@
                 <div class="header">{{name}}</div>
 
                 <div class="banner-img img-thumbnail">
-                    <img src="{{#if photo}}{{photo}}{{else}}https://avatars.servers.getgo.com/2205256774854474505_medium.jpg{{/if}}" alt="Image 1">
+                    <img src="{{#if facebook.photo}}{{facebook.photo}}{{else}}https://avatars.servers.getgo.com/2205256774854474505_medium.jpg{{/if}}" alt="Image 1">
                 </div>
 
                 <div class="stats">
@@ -62,6 +62,15 @@
                     <div>
                         <strong>CANJES</strong> <span class="redeem_puntos">{{canjes}}</span>
                     </div>
+
+                    <div>
+                        <strong>ID AFILIADO</strong> {{affiliateId}}
+                    </div>
+
+                    <div>
+                        <strong>REGISTRADO</strong> {{#if facebook.provider}}{{ facebook.provider}}{{else}}Local{{/if}}
+                    </div>
+                    
 
                 </div>
                 

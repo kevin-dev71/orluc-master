@@ -6,4 +6,5 @@ mongoose.connect(process.env.MONGODB_URI , {
     useFindAndModify: false
 })
 	.then(db => console.log('DB connected'))
-	.catch(err => console.log(err));
+    .catch(err => console.log(err));
+    
