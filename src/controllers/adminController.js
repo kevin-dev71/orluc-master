@@ -50,14 +50,14 @@ controller.productForm = (req, res) => {
   var scripts = [
     {
       script:
-        "https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js"
+        "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     },
-    { script: "/js/awesomplete.js" }
+    { script: "/js/tagsinput.js" }
   ];
   var styles = [
     {
       style:
-        "https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css"
+        "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     }
   ];
   res.render("admin/products/new", { scripts, styles });
@@ -93,14 +93,14 @@ controller.productEdit = async (req, res) => {
   var scripts = [
     {
       script:
-        "https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.js"
+        "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     },
-    { script: "/js/awesomplete.js" }
+    { script: "/js/tagsinput.js" }
   ];
   var styles = [
     {
       style:
-        "https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.4/awesomplete.min.css"
+        "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     }
   ];
   const product = await Product.findById(req.params.id);

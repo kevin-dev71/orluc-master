@@ -1,44 +1,165 @@
 html,
 body {
-  font-family: "Ubuntu", sans-serif;  
+  font-family: "Ubuntu", sans-serif;
 }
 
-html { 
-  background: url("https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1355&q=80") no-repeat center center fixed; 
+html {
+  background: url("https://images.unsplash.com/photo-1495195129352-aeb325a55b65?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1355&q=80")
+    no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-body{
+body {
   padding-bottom: 70px;
   background-color: transparent;
 }
 
-.bg-orluc{
-   background-color: rgba(14,140,69,0.9) !important;
+.bg-orluc {
+  background-color: rgba(14, 140, 69, 0.9) !important;
 }
 
-.box{
+.box {
   padding: 20px;
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
-.onl_btn-facebook {background: #3b5998;border-color:#172d5e}
-
-
-
+.onl_btn-facebook {
+  background: #3b5998;
+  border-color: #172d5e;
+}
 
 /* ================ CONVERITR A PDF ================== */
 
 @page {
-    margin: 60px 0px;
-  }
+  margin: 60px 0px;
+}
 
 @media print {
   .breaker-avoid {
     page-break-inside: avoid;
   }
+}
+
+/* =============== TAGS INPUT ================== */
+.tagsinput,
+.tagsinput * {
+  box-sizing: border-box;
+}
+.tagsinput {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  background: #fff;
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #556270;
+  padding: 5px 5px 0;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+}
+.tagsinput.focus {
+  border-color: #ccc;
+}
+.tagsinput .tag {
+  position: relative;
+  background: #2193b0; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #6dd5ed,
+    #2193b0
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #6dd5ed,
+    #2193b0
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: block;
+  max-width: 100%;
+  word-wrap: break-word;
+  color: #fff;
+  padding: 5px 30px 5px 5px;
+  border-radius: 2px;
+  margin: 0 5px 5px 0;
+}
+.tagsinput .tag .tag-remove {
+  position: absolute;
+  background: 0 0;
+  display: block;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  color: #ff6b6b;
+  line-height: 30px;
+  padding: 0;
+  border: 0;
+}
+.tagsinput .tag .tag-remove:after,
+.tagsinput .tag .tag-remove:before {
+  background: #ff6b6b;
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 2px;
+  top: 14px;
+  left: 10px;
+  content: "";
+}
+.tagsinput .tag .tag-remove:before {
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+.tagsinput .tag .tag-remove:after {
+  -webkit-transform: rotateZ(-45deg);
+  transform: rotateZ(-45deg);
+}
+.tagsinput div {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+.tagsinput div input {
+  background: 0 0;
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px;
+  border: 0;
+  margin: 0 5px 5px 0;
+}
+.tagsinput div input.error {
+  color: #ff6b6b;
+}
+.tagsinput div input::-ms-clear {
+  display: none;
+}
+.tagsinput div input::-webkit-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+.tagsinput div input:-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+.tagsinput div input::-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+.tagsinput div input:-ms-input-placeholder {
+  color: #ccc;
+  opacity: 1;
 }
