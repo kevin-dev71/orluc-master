@@ -30,6 +30,10 @@ module.exports = app => {
 
     router.get('/products/:id' , adminCtlr.productShow);
 
+    router.get('/privacy' , (req, res) => {
+        res.render('privacy-pages/privacy');
+    });
+
     // =============== USERS ==================
     router.get('/users/profile' , isAuthenticated, usersCtlr.profile);
     router.put('/users/:id' , isAuthenticated, usersCtlr.update);

@@ -20,7 +20,7 @@ $(document).ready(function(){
 		e.stopPropagation();
         e.preventDefault();
         let etiqueta = $(this).parent().parent().find('.puntos');
-        if(etiqueta.text() != '10'){            
+        if(etiqueta.text() < '10'){            
             alert('Aun no tiene 10 puntos');
         }
         else{
