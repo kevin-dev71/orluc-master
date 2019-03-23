@@ -292,7 +292,7 @@ controller.convertBodyToPDF = async (req, res) => {
       landscape: true
     };
 
-    await page.goto("http://localhost:3000/admin/pdf", {
+    await page.goto(process.env.SITE_URL + ":" + process.env.PORT + "/admin/pdf", {
       waitUntil: "networkidle2"
     });
     /*

@@ -34,6 +34,10 @@ module.exports = app => {
         res.render('privacy-pages/privacy');
     });
 
+    router.get('/terms' , (req, res) => {
+        res.render('privacy-pages/terms');
+    });
+
     // =============== USERS ==================
     router.get('/users/profile' , isAuthenticated, usersCtlr.profile);
     router.put('/users/:id' , isAuthenticated, usersCtlr.update);

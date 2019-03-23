@@ -33,7 +33,7 @@ async function seedDB() {
     }
   });
   // Create 90 products
-  for (let i = 0; i < 8; i++) {
+  /*for (let i = 0; i < 8; i++) {
     const product = new Product();
     product.category = faker.commerce.department();
     product.name = faker.commerce.productName();
@@ -47,8 +47,8 @@ async function seedDB() {
         return next(err);
       }
     });
-  }
-  console.log("BD Seeded with 8 products and Admin User");
+  }*/
+  console.log("BD Seeded  with Admin User");
 }
 
 module.exports = seedDB;
