@@ -5,6 +5,13 @@ const sidebar = require("../helpers/dashboard/sidebar");
 const { unlink } = require("fs-extra");
 const path = require("path");
 const puppeteer = require("puppeteer");
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 const controller = {};
 
@@ -65,7 +72,9 @@ controller.productForm = (req, res) => {
 
 controller.productCreate = async (req, res) => {
   const imagePath = "/uploads/" + req.file.filename;
-  req.body.product.image = imagePath;
+  const result = await cloudinary.v2.uploader.upload(imagePath);
+  req.body.product.image = result.secure_url;
+  req.body.product.public_id = result.public_id;
   const newProduct = new Product(req.body.product);
   await newProduct.save();
   let mapTag = req.body.product.tags
@@ -111,7 +120,9 @@ controller.productUpdate = async (req, res) => {
   // Falta eliminar el imagen
   if (req.file) {
     const imagePath = "/uploads/" + req.file.filename;
-    req.body.product.image = imagePath;
+    const result = await cloudinary.v2.uploader.upload(imagePath);
+    req.body.product.image = result.secure_url;
+    req.body.product.public_id = result.public_id;
   }
   // Tags update
   let mapTag = req.body.product.tags
@@ -126,7 +137,8 @@ controller.productUpdate = async (req, res) => {
     console.log("hay tags repetidos");
   }
 
-  await Product.findByIdAndUpdate(req.params.id, req.body.product);
+  const oldProduct = await Product.findByIdAndUpdate(req.params.id, req.body.product);
+  await cloudinary.v2.uploader.destroy(oldProduct.public_id);
 
   req.flash("success", "Product Updated Successfully");
   res.redirect("/admin/products");
@@ -136,7 +148,8 @@ controller.productDelete = async (req, res) => {
   const product = await Product.findByIdAndDelete(req.params.id);
   if (product) {
     try {
-      await unlink(path.resolve("./src/public/" + product.image));
+      //await unlink(path.resolve("./src/public/" + product.image));
+      await cloudinary.v2.uploader.destroy(product.public_id);
       await product.remove();
       req.flash("success", "Producto Eliminado con exito");
       res.redirect("/admin/products");
@@ -144,7 +157,7 @@ controller.productDelete = async (req, res) => {
       console.log(
         "no se consiguio imagen relacionado al producto con id: " + product._id
       );
-      req.flash("success", "Producto Eliminado con exito!!!");
+      req.flash("success", "ALGO SALIO MAL!!!");
       res.redirect("/admin/products");
     }
   } else {

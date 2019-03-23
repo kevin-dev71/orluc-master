@@ -9,6 +9,7 @@ var ProductSchema = new mongoose.Schema({
    quantity: { type: Number, required: true },
    tags: String,
    category: String,
+   public_id: String,
    date:     { type: Date, default: Date.now }
 });
 

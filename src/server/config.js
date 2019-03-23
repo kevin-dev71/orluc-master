@@ -48,7 +48,7 @@ module.exports = app => {
             if(mimetype && extname){
                 return cb(null, true);
             }
-            cb("Error: File upload only supports the following filetypes - " + filetypes);
+            cb("Error: Sube Archivos following filetypes - " + filetypes);
         }
         // limits: {fileSize: 1000000}
     }).single('image'));
