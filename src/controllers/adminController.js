@@ -71,25 +71,32 @@ controller.productForm = (req, res) => {
 };
 
 controller.productCreate = async (req, res) => {
-  const imagePath = "/uploads/" + req.file.filename;
-  const result = await cloudinary.v2.uploader.upload(imagePath);
-  req.body.product.image = result.secure_url;
-  req.body.product.public_id = result.public_id;
-  const newProduct = new Product(req.body.product);
-  await newProduct.save();
-  let mapTag = req.body.product.tags
-    .replace(/\s/g, "")
-    .split(",")
-    .map(function(tag) {
-      return { name: tag };
-    });
+  const imagePath = req.file.path;
   try {
-    await Tag.insertMany(mapTag, { ordered: false });
-  } catch (e) {
-    console.log("hay tags repetidos");
+    const result = await cloudinary.v2.uploader.upload(imagePath);
+    req.body.product.image = result.secure_url;
+    req.body.product.public_id = result.public_id;
+    const newProduct = new Product(req.body.product);
+    await newProduct.save();
+    let mapTag = req.body.product.tags
+      .replace(/\s/g, "")
+      .split(",")
+      .map(function(tag) {
+        return { name: tag };
+      });
+    try {
+      await Tag.insertMany(mapTag, { ordered: false });
+    } catch (e) {
+      console.log("hay tags repetidos");
+    }
+    req.flash("success", "Producto guardado con exito");
+    res.redirect("/admin/products/new");
+  } catch(err){
+    console.log(err);
+    req.flash("error", "Error Guardando el Producto");
+    res.redirect("/admin/products/new");
   }
-  req.flash("success", "Producto guardado con exito");
-  res.redirect("/admin/products/new");
+  
 };
 
 controller.productShow = async (req, res) => {
@@ -119,10 +126,16 @@ controller.productEdit = async (req, res) => {
 controller.productUpdate = async (req, res) => {
   // Falta eliminar el imagen
   if (req.file) {
-    const imagePath = "/uploads/" + req.file.filename;
-    const result = await cloudinary.v2.uploader.upload(imagePath);
-    req.body.product.image = result.secure_url;
-    req.body.product.public_id = result.public_id;
+    try{
+      const imagePath = req.file.path;
+      const result = await cloudinary.v2.uploader.upload(imagePath);
+      req.body.product.image = result.secure_url;
+      req.body.product.public_id = result.public_id;
+    } catch(err) {
+      req.flash("error", "Error Subiendo la Foto a Cloudinary, No se guardo producto");
+      res.redirect("/admin/products");
+    }
+    
   }
   // Tags update
   let mapTag = req.body.product.tags
@@ -137,11 +150,18 @@ controller.productUpdate = async (req, res) => {
     console.log("hay tags repetidos");
   }
 
-  const oldProduct = await Product.findByIdAndUpdate(req.params.id, req.body.product);
-  await cloudinary.v2.uploader.destroy(oldProduct.public_id);
+  try{
+    const oldProduct = await Product.findByIdAndUpdate(req.params.id, req.body.product);
+    await cloudinary.v2.uploader.destroy(oldProduct.public_id);
 
-  req.flash("success", "Product Updated Successfully");
-  res.redirect("/admin/products");
+    req.flash("success", "Product Updated Successfully");
+    res.redirect("/admin/products");
+  } catch(err){
+    req.flash("error", "No se pudo Editar el Producto");
+    res.redirect("/admin/products");
+  }
+
+  
 };
 
 controller.productDelete = async (req, res) => {
@@ -157,7 +177,7 @@ controller.productDelete = async (req, res) => {
       console.log(
         "no se consiguio imagen relacionado al producto con id: " + product._id
       );
-      req.flash("success", "ALGO SALIO MAL!!!");
+      req.flash("error", "ALGO SALIO MAL!!!");
       res.redirect("/admin/products");
     }
   } else {
