@@ -310,12 +310,11 @@ controller.productsPDF = async (req, res) => {
 controller.convertBodyToPDF = async (req, res) => {
   try {
     const browser = await puppeteer.launch({
-      dumpio: true,
       headless : true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 });
+    //await page.setViewport({ width: 1920, height: 1080 });
     const options = {
       //path: __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf",
       format: "A4"
