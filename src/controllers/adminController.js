@@ -396,38 +396,4 @@ controller.userSearchList = async (req, res) => {
   }
 };
 
-/*controller.productSearchListPaginated = async (req, res) => {
-  let perPage = 4;
-  let page = req.query.page || 1;
-
-  if (req.query.search) {
-    const regex = new RegExp(escapeRegex(req.query.search), "gi");
-    // Get all products from DB
-    Product.find({ $or: [{ name: regex }, { tags: regex }] })
-      .skip(perPage * page - perPage)
-      .limit(perPage)
-      .sort({ name: 1 })
-      .exec((err, products) => {
-        if(err){
-          res.status(400).json(err);
-        } else {
-          Product.count({ $or: [{ name: regex }, { tags: regex }] })
-          .exec((err, count) => {
-            // count to calculate the number of pages
-            if (err) {
-              console.log(err);
-              res.status(400).json(err);
-            } else {
-              res.status(200).json({
-                products,
-                current: page,
-                pages: Math.ceil(count / perPage)
-              });
-            }
-          });
-        }
-      });
-  }
-};*/
-
 module.exports = controller;
