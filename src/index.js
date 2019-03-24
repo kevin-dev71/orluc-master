@@ -17,6 +17,6 @@ seedDB();*/
 const app = config(express());
 
 // starting server
-app.listen(app.get('port') , () => {
-    console.log('Server on port' , app.get('port'));
+app.listen(process.env.PORT , () => {
+    console.log('Server on port' , process.env.PORT);
 });
