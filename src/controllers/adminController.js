@@ -309,7 +309,10 @@ controller.productsPDF = async (req, res) => {
 
 controller.convertBodyToPDF = async (req, res) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      dumpio: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
     const options = {
