@@ -83,14 +83,14 @@ controller.productForm = (req, res) => {
   var scripts = [
     {
       script:
-        "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     },
     { script: "/js/tagsinput.js" }
   ];
   var styles = [
     {
       style:
-        "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     }
   ];
   res.render("admin/products/new", { scripts, styles });
@@ -135,14 +135,14 @@ controller.productEdit = async (req, res) => {
   var scripts = [
     {
       script:
-        "http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        "https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
     },
     { script: "/js/tagsinput.js" }
   ];
   var styles = [
     {
       style:
-        "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     }
   ];
   const product = await Product.findById(req.params.id);
