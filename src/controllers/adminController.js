@@ -311,6 +311,7 @@ controller.convertBodyToPDF = async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       dumpio: true,
+      headless : true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
