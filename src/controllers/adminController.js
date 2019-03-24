@@ -313,12 +313,11 @@ controller.convertBodyToPDF = async (req, res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
     const options = {
-      path: __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf",
-      format: "A4",
-      landscape: true
+      //path: __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf",
+      format: "A4"
     };
 
-    await page.goto(process.env.SITE_URL + ":" + process.env.PORT + "/admin/pdf", {
+    await page.goto(process.env.SITE_URL + "/admin/pdf", {
       waitUntil: "networkidle2"
     });
     /*
@@ -327,14 +326,17 @@ controller.convertBodyToPDF = async (req, res) => {
     await page.type('#email', process.env.PDF_USER)
 await page.type('#password', process.env.PDF_PASSWORD)
 await page.click('#submit')*/
-    await page.pdf(options);
+    const pdf = await page.pdf(options);
 
     await browser.close();
 
     console.log("pdf creado");
-    res.download(
+      res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length });
+      res.send(pdf);
+      
+    /*res.download(
       __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf"
-    );
+    );*/
   } catch (e) {
     console.log("error converting PDF", e);
     res.send("Error Creating PDF");
