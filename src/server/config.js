@@ -4,7 +4,7 @@ const morgan            = require('morgan');
 const multer            = require('multer');
 const express           = require('express');
 const methodOverride    = require('method-override');
-const errorHandler      = require('errorHandler');
+//const errorHandler      = require('errorHandler');
 const session           = require('express-session');
 const flash             = require('connect-flash');
 const passport          = require('passport');
@@ -79,9 +79,9 @@ module.exports = app => {
     app.use(express.static(path.join(__dirname, '../public')));
 
     //errorhandlers
-    if ('development' === app.get('env')){
+    /*if ('development' === app.get('env')){
         app.use(errorHandler);
-    }
+    }*/
 
 
     return app;
