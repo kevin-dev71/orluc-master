@@ -312,16 +312,19 @@ controller.convertBodyToPDF = async (req, res) => {
     const browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
+    console.log("puppeter browser launched");
     const page = await browser.newPage();
+    console.log("puppeter new page");
     //await page.setViewport({ width: 1920, height: 1080 });
     const options = {
       //path: __dirname.split("controllers")[0] + "/public/reportes/catalogo_orluc.pdf",
       format: "A4"
     };
 
-    await page.goto(process.env.SITE_URL + ":" + process.env.PORT + "/admin/pdf", {
+    await page.goto("https://orluc.herokuapp.com/admin/pdf", {
       waitUntil: "networkidle2"
     });
+    console.log("puppeter goto ready");
     /*
     In case you need to log in first to generate a PDF from a protected page, first you need to navigate to the login page, inspect the form elements for ID or name, fill them in, then submit the form:
 
@@ -329,10 +332,11 @@ controller.convertBodyToPDF = async (req, res) => {
 await page.type('#password', process.env.PDF_PASSWORD)
 await page.click('#submit')*/
     const pdf = await page.pdf(options);
+    console.log("puppeter pdf generated in memory");
 
     await browser.close();
 
-    console.log("pdf creado");
+    console.log("pdf creado puppeter browser cerrado");
       res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length });
       res.send(pdf);
       
