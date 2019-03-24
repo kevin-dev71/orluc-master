@@ -6,6 +6,7 @@ const { unlink } = require("fs-extra");
 const path = require("path");
 const puppeteer = require("puppeteer");
 const cloudinary = require('cloudinary');
+const bcrypt = require("bcryptjs");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -18,6 +19,31 @@ const controller = {};
 // Define escapeRegex function for search feature
 function escapeRegex(text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+// SEED
+controller.seed = async (req , res ) => {
+  
+    var adminUser = new User({
+      name: "Administrador",
+      email: "admin@admin.com",
+      password: bcrypt.hashSync("admin", bcrypt.genSaltSync(10)),
+      isAdmin: true
+    });
+    // Create a Admin User
+    try{
+      await User.create(adminUser, function(e) {
+        if (e) {
+          throw e;
+        }
+      });
+      console.log("BD Seeded  with Admin User");
+      res.redirect("/login");
+    } catch(err){
+      console.log("BD Cannot seed  with Admin User");
+      res.redirect("/login");
+    }
+    
 }
 
 // PRODUCTS ADMIN

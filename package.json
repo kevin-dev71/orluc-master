@@ -2,7 +2,7 @@
   "name": "osiris-app",
   "version": "1.0.0",
   "engines": {
-    "node":"10.15.1"
+    "node": "10.15.1"
   },
   "description": "",
   "main": "index.js",
@@ -10,6 +10,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.13.2",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.3",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",

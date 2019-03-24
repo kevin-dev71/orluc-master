@@ -5,10 +5,11 @@ const multer            = require('multer');
 const express           = require('express');
 const methodOverride    = require('method-override');
 //const errorHandler      = require('errorHandler');
+const mongoose          = require('mongoose');
 const session           = require('express-session');
+const MongoStore        = require('connect-mongo')(session);
 const flash             = require('connect-flash');
 const passport          = require('passport');
-
 const routes            = require('../routes/index');
 
 module.exports = app => {
@@ -56,7 +57,8 @@ module.exports = app => {
     app.use(express.json());
     app.use(methodOverride('_method'));
     app.use(session({
-        secret: 'mysecretapp',
+        secret: 'mysecretapp la osiris',
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
         resave: true,
         saveUninitialized: true
     }));

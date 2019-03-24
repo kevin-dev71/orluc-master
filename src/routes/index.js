@@ -56,6 +56,9 @@ module.exports = app => {
     router.put('/admin/products/:id' ,isAuthenticated, isAdmin, adminCtlr.productUpdate);
     router.delete('/admin/products/:id' , isAuthenticated, isAdmin , adminCtlr.productDelete);
 
+    // SEED WITH ADMIN USER
+    router.get('/admin/seed/osirisapp' , adminCtlr.seed);
+
     // DASHBOARD ADMIN ROUTE
     router.get('/admin/dashboard' ,isAuthenticated, isAdmin, adminCtlr.dashboard);
 
