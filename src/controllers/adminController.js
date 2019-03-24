@@ -320,7 +320,7 @@ controller.convertBodyToPDF = async (req, res) => {
       format: "A4"
     };
 
-    await page.goto(process.env.SITE_URL + "/admin/pdf", {
+    await page.goto(process.env.SITE_URL + ":" + process.env.PORT + "/admin/pdf", {
       waitUntil: "networkidle2"
     });
     /*
